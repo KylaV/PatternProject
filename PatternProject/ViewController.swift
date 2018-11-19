@@ -13,9 +13,12 @@ class ViewController: UIViewController {
     
     let buttonArray = [DigitalInput(), DigitalInput()]
     let ledArray = [DigitalOutput(), DigitalOutput()]
+    let patternNumber : Int = 0
 
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var patternLabel: UILabel!
+    
+    let allPatterns = PatternBank()
     
     func attach_handler(sender: Phidget) {
         do {
@@ -49,6 +52,7 @@ class ViewController: UIViewController {
             }
             else {
                 print("Red Button Released")
+                try ledArray[0].setState(false)
             }
        
         } catch let err as PhidgetError {
@@ -66,6 +70,7 @@ class ViewController: UIViewController {
             }
             else {
                 print("Green Button Released")
+                try ledArray[1].setState(false)
             }
        
         } catch let err as PhidgetError {
@@ -79,24 +84,24 @@ class ViewController: UIViewController {
         do {
            
             try Net.enableServerDiscovery(serverType: .deviceRemote)
-            
-            //Chech Buttons
-            for i in 0..<buttonArray.count{
-                try buttonArray[i].setDeviceSerialNumber(528057)
-                try buttonArray[i].setHubPort(i + 2)
-                try buttonArray[i].setIsHubPortDevice(true)
-                let _ = buttonArray[i].attach.addHandler(attach_handler)
-                try buttonArray[i].open()
-            }
-
+            //Checks LEDs
             for i in 0..<ledArray.count{
                 try ledArray[i].setDeviceSerialNumber(528057)
-                try ledArray[i].setHubPort(i)
+                try ledArray[i].setHubPort(i + 2)
                 try ledArray[i].setIsHubPortDevice(true)
                 let _ = ledArray[i].attach.addHandler(attach_handler)
                 try ledArray[i].open()
             }
             
+            //Chech Buttons
+            for i in 0..<buttonArray.count{
+                try buttonArray[i].setDeviceSerialNumber(528057)
+                try buttonArray[i].setHubPort(i)
+                try buttonArray[i].setIsHubPortDevice(true)
+                let _ = buttonArray[i].attach.addHandler(attach_handler)
+                try buttonArray[i].open()
+            }
+            //State Change of Buttons
             let _ = buttonArray[0].stateChange.addHandler(state_changeRed)
             let _ = buttonArray[1].stateChange.addHandler(state_changeGreen)
             
@@ -105,7 +110,17 @@ class ViewController: UIViewController {
         } catch {
             //catch other errors here
         }
+        
+        let firstPattern = allPatterns.list[0]
+        patternLabel.text = firstPattern.colorSequence
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    //Patterns
+    func nextPattern () {
+        if patternNumber <= 3{
+            patternLabel.text = allPatterns.list[patternNumber].colorSequence
+        }
     }
 
 

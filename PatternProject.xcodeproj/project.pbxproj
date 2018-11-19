@@ -13,6 +13,7 @@
 		4230D60F219E176300DCAE37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4230D60D219E176300DCAE37 /* Main.storyboard */; };
 		4230D611219E176400DCAE37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4230D610219E176400DCAE37 /* Assets.xcassets */; };
 		4230D614219E176400DCAE37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4230D612219E176400DCAE37 /* LaunchScreen.storyboard */; };
+		4274D78C219F602C00780FE7 /* PatternBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4274D78B219F602C00780FE7 /* PatternBank.swift */; };
 		42F89B5E219E195800133EB9 /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F89B5D219E195800133EB9 /* Pattern.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		4230D610219E176400DCAE37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4230D613219E176400DCAE37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4230D615219E176400DCAE37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4274D78B219F602C00780FE7 /* PatternBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternBank.swift; sourceTree = "<group>"; };
 		42F89B5D219E195800133EB9 /* Pattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pattern.swift; sourceTree = "<group>"; };
 		6035D890D2B15D6BA4D3BAAC /* Pods-PatternProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PatternProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PatternProject/Pods-PatternProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 				4230D60B219E176300DCAE37 /* ViewController.swift */,
 				4230D60D219E176300DCAE37 /* Main.storyboard */,
 				42F89B5D219E195800133EB9 /* Pattern.swift */,
+				4274D78B219F602C00780FE7 /* PatternBank.swift */,
 				4230D610219E176400DCAE37 /* Assets.xcassets */,
 				4230D612219E176400DCAE37 /* LaunchScreen.storyboard */,
 				4230D615219E176400DCAE37 /* Info.plist */,
@@ -213,6 +216,7 @@
 			files = (
 				42F89B5E219E195800133EB9 /* Pattern.swift in Sources */,
 				4230D60C219E176300DCAE37 /* ViewController.swift in Sources */,
+				4274D78C219F602C00780FE7 /* PatternBank.swift in Sources */,
 				4230D60A219E176300DCAE37 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
