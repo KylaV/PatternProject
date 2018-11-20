@@ -14,6 +14,10 @@ class ViewController: UIViewController {
     let buttonArray = [DigitalInput(), DigitalInput()]
     let ledArray = [DigitalOutput(), DigitalOutput()]
     let patternNumber : Int = 0
+    var playerAnswer1 : Bool = false
+    var playerAnswer2 : Bool = false
+    var playerAnswer3 : Bool = false
+    var playerAnswer4 : Bool = false
 
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var patternLabel: UILabel!
@@ -49,9 +53,16 @@ class ViewController: UIViewController {
             if (state == true){
                 print("Red Button Pressed")
                 try ledArray[0].setState(true)
+                playerAnswer1 = false
+                playerAnswer2 = false
+                playerAnswer3 = false
+                playerAnswer4 = false
+                check1()
+                check2()
+                check3()
+                check4()
             }
             else {
-                print("Red Button Released")
                 try ledArray[0].setState(false)
             }
        
@@ -67,11 +78,19 @@ class ViewController: UIViewController {
             if (state == true){
                 print("Green Button Pressed")
                 try ledArray[1].setState(true)
+                playerAnswer1 = true
+                playerAnswer2 = true
+                playerAnswer3 = true
+                playerAnswer4 = true
+                check1()
+                check2()
+                check3()
+                check4()
             }
             else {
-                print("Green Button Released")
                 try ledArray[1].setState(false)
             }
+            
        
         } catch let err as PhidgetError {
             print("Phidget Error" + err.description)
@@ -122,7 +141,50 @@ class ViewController: UIViewController {
             patternLabel.text = allPatterns.list[patternNumber].colorSequence
         }
     }
-
-
+    
+    func check1() {
+     
+        let correct1 = allPatterns.list[patternNumber].answer1
+        
+        if (playerAnswer1 == correct1) {
+            print("1 Correct!")
+        }
+        else {
+            print("1 Wrong!")
+            }
+    }
+    
+    func check2() {
+        let correct2 = allPatterns.list[patternNumber].answer2
+        
+        if (playerAnswer2 == correct2) {
+            print("2 Correct")
+        }
+        else {
+            print("2 Wrong")
+        }
+    }
+    
+    func check3() {
+        let correct3 = allPatterns.list[patternNumber].answer3
+        
+        if (playerAnswer3 == correct3) {
+            print("3 Correct")
+        }
+        else {
+            print("3 Wrong")
+        }
+    }
+    
+    func check4() {
+        let correct4 = allPatterns.list[patternNumber].answer4
+        
+        if (playerAnswer4 == correct4) {
+            print("4 Correct")
+        }
+        else {
+            print("4 Wrong")
+        }
+    }
+    
 }
-
