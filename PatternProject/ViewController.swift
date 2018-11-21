@@ -13,14 +13,17 @@ class ViewController: UIViewController {
     
     let buttonArray = [DigitalInput(), DigitalInput()]
     let ledArray = [DigitalOutput(), DigitalOutput()]
-    let patternNumber : Int = 0
+    var patternNumber : Int = 0
     var playerAnswer1 : Bool = false
     var playerAnswer2 : Bool = false
     var playerAnswer3 : Bool = false
     var playerAnswer4 : Bool = false
+    var playerScore : Int = 0
+    var playerPatternNumber : Int = 0
 
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var patternLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     let allPatterns = PatternBank()
     
@@ -50,17 +53,29 @@ class ViewController: UIViewController {
    
     func state_changeRed (sender: DigitalInput, state: Bool) {
         do {
-            if (state == true){
+            if (state == true && playerPatternNumber == 0){
                 print("Red Button Pressed")
                 try ledArray[0].setState(true)
                 playerAnswer1 = false
-                playerAnswer2 = false
-                playerAnswer3 = false
-                playerAnswer4 = false
                 check1()
+                playerPatternNumber   = 1
+            }
+            else if (playerPatternNumber == 1 && state == true) {
+                playerAnswer2 = false
                 check2()
+                playerPatternNumber = 2
+            }
+            else if (playerPatternNumber == 2 && state == true) {
+                playerAnswer3 = false
                 check3()
+                playerPatternNumber = 3
+            }
+            else if (playerPatternNumber == 3 && state == true) {
+                playerAnswer4 = false
                 check4()
+                playerPatternNumber = 0
+                patternNumber = patternNumber + 1
+                nextPattern()
             }
             else {
                 try ledArray[0].setState(false)
@@ -75,17 +90,29 @@ class ViewController: UIViewController {
     
     func state_changeGreen (sender: DigitalInput, state: Bool) {
         do {
-            if (state == true){
+            if (state == true && playerPatternNumber == 0){
                 print("Green Button Pressed")
                 try ledArray[1].setState(true)
                 playerAnswer1 = true
-                playerAnswer2 = true
-                playerAnswer3 = true
-                playerAnswer4 = true
                 check1()
+                playerPatternNumber = 1
+            }
+            else if (playerPatternNumber == 1 && state == true) {
+                playerAnswer2 = true
                 check2()
+                playerPatternNumber = 2
+            }
+            else if (playerPatternNumber == 2 && state == true) {
+                playerAnswer3 = true
                 check3()
+                playerPatternNumber = 3
+            }
+            else if (playerPatternNumber == 3 && state == true) {
+                playerAnswer4 = true
                 check4()
+                playerPatternNumber = 0
+                patternNumber = patternNumber + 1
+                nextPattern()
             }
             else {
                 try ledArray[1].setState(false)
@@ -138,10 +165,14 @@ class ViewController: UIViewController {
     //Patterns
     func nextPattern () {
         if patternNumber <= 3{
-            patternLabel.text = allPatterns.list[patternNumber].colorSequence
+            DispatchQueue.main.async {
+                self.patternLabel.text = self.allPatterns.list[self.patternNumber].colorSequence
+                
+                self.scoreLabel.text = "Score: \(self.playerScore)"
+            }
         }
     }
-    
+    //checks answers
     func check1() {
      
         let correct1 = allPatterns.list[patternNumber].answer1
@@ -181,10 +212,12 @@ class ViewController: UIViewController {
         
         if (playerAnswer4 == correct4) {
             print("4 Correct")
+            playerScore += 1
         }
         else {
             print("4 Wrong")
         }
+        
     }
     
 }

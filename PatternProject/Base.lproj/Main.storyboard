@@ -32,6 +32,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8h-Ua-RGC">
+                                <rect key="frame" x="123" y="178" width="129" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.083024747669696808" green="0.64332187175750732" blue="0.75002378225326538" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -39,11 +46,12 @@
                     <connections>
                         <outlet property="infoLabel" destination="ckd-f0-Unk" id="s3z-dU-kE9"/>
                         <outlet property="patternLabel" destination="MVi-La-qTq" id="wff-i7-zF0"/>
+                        <outlet property="scoreLabel" destination="B8h-Ua-RGC" id="jep-J9-YlM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-127" y="105"/>
+            <point key="canvasLocation" x="588" y="120"/>
         </scene>
     </scenes>
 </document>
