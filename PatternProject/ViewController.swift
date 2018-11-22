@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var playerAnswer4 : Bool = false
     var playerScore : Int = 0
     var playerPatternNumber : Int = 0
+    var playerReady : Bool = true
 
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var patternLabel: UILabel!
@@ -53,24 +54,34 @@ class ViewController: UIViewController {
    
     func state_changeRed (sender: DigitalInput, state: Bool) {
         do {
-            if (state == true && playerPatternNumber == 0){
+            if (state == true && playerReady == true){
+                DispatchQueue.main.async {
+                    self.infoLabel.text = "Get Ready"
+                }
+                playerReady = false
+            }
+            else if (state == true && playerPatternNumber == 0){
                 print("Red Button Pressed")
                 try ledArray[0].setState(true)
                 playerAnswer1 = false
                 check1()
-                playerPatternNumber   = 1
+                playerPatternNumber = 1
+                
             }
             else if (playerPatternNumber == 1 && state == true) {
+                try ledArray[0].setState(true)
                 playerAnswer2 = false
                 check2()
                 playerPatternNumber = 2
             }
             else if (playerPatternNumber == 2 && state == true) {
+                try ledArray[0].setState(true)
                 playerAnswer3 = false
                 check3()
                 playerPatternNumber = 3
             }
             else if (playerPatternNumber == 3 && state == true) {
+                try ledArray[0].setState(true)
                 playerAnswer4 = false
                 check4()
                 playerPatternNumber = 0
@@ -90,7 +101,13 @@ class ViewController: UIViewController {
     
     func state_changeGreen (sender: DigitalInput, state: Bool) {
         do {
-            if (state == true && playerPatternNumber == 0){
+            if (state == true && playerReady == true){
+                DispatchQueue.main.async {
+                    self.infoLabel.text = "Get Ready"
+                }
+                playerReady = false
+            }
+            else if (state == true && playerPatternNumber == 0){
                 print("Green Button Pressed")
                 try ledArray[1].setState(true)
                 playerAnswer1 = true
@@ -98,16 +115,19 @@ class ViewController: UIViewController {
                 playerPatternNumber = 1
             }
             else if (playerPatternNumber == 1 && state == true) {
+                try ledArray[1].setState(true)
                 playerAnswer2 = true
                 check2()
                 playerPatternNumber = 2
             }
             else if (playerPatternNumber == 2 && state == true) {
+                try ledArray[1].setState(true)
                 playerAnswer3 = true
                 check3()
                 playerPatternNumber = 3
             }
             else if (playerPatternNumber == 3 && state == true) {
+                try ledArray[1].setState(true)
                 playerAnswer4 = true
                 check4()
                 playerPatternNumber = 0
@@ -164,14 +184,32 @@ class ViewController: UIViewController {
     
     //Patterns
     func nextPattern () {
-        if patternNumber <= 3{
+        if patternNumber <= 4{
             DispatchQueue.main.async {
                 self.patternLabel.text = self.allPatterns.list[self.patternNumber].colorSequence
                 
                 self.scoreLabel.text = "Score: \(self.playerScore)"
             }
         }
+        else {
+            let alert = UIAlertController(title: "Awesome", message: "You finished all the patterns, do you want to start over?", preferredStyle: .alert)
+            
+            let restartAction = UIAlertAction(title: "Restart", style: .default, handler: {
+                (UIAlertAction) in self.startOver()
+            })
+            
+            alert.addAction(restartAction)
+            
+            present(alert, animated: true, completion: nil)
+        }
     }
+    
+    func startOver() {
+        patternNumber = 0
+        playerScore = 0
+        nextPattern()
+    }
+    
     //checks answers
     func check1() {
      
@@ -208,16 +246,25 @@ class ViewController: UIViewController {
     }
     
     func check4() {
+        let correct1 = allPatterns.list[patternNumber].answer1
+        let correct2 = allPatterns.list[patternNumber].answer2
+        let correct3 = allPatterns.list[patternNumber].answer3
         let correct4 = allPatterns.list[patternNumber].answer4
         
         if (playerAnswer4 == correct4) {
             print("4 Correct")
-            playerScore += 1
         }
+     
         else {
             print("4 Wrong")
         }
         
+        if (playerAnswer1 == correct1 && playerAnswer2 == correct2 && playerAnswer3 == correct3 && playerAnswer4 == correct4) {
+            playerScore += 1
+        }
+        else {
+            
+        }
     }
     
 }
