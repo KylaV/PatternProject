@@ -13,20 +13,19 @@ class ViewController: UIViewController {
     
     let buttonArray = [DigitalInput(), DigitalInput()]
     let ledArray = [DigitalOutput(), DigitalOutput()]
+    let allPatterns = PatternBank()
     var patternNumber : Int = 0
+    var playerScore : Int = 0
+    var playerPatternNumber : Int = 0
     var playerAnswer1 : Bool = false
     var playerAnswer2 : Bool = false
     var playerAnswer3 : Bool = false
     var playerAnswer4 : Bool = false
-    var playerScore : Int = 0
-    var playerPatternNumber : Int = 0
     var playerReady : Bool = true
 
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var patternLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
-    
-    let allPatterns = PatternBank()
     
     func attach_handler(sender: Phidget) {
         do {
@@ -54,9 +53,12 @@ class ViewController: UIViewController {
    
     func state_changeRed (sender: DigitalInput, state: Bool) {
         do {
+            let firstPattern = allPatterns.list[0]
+            
             if (state == true && playerReady == true){
                 DispatchQueue.main.async {
-                    self.infoLabel.text = "Get Ready"
+                    self.infoLabel.text = "Start!"
+                    self.patternLabel.text = firstPattern.colorSequence
                 }
                 playerReady = false
             }
@@ -101,9 +103,12 @@ class ViewController: UIViewController {
     
     func state_changeGreen (sender: DigitalInput, state: Bool) {
         do {
+            let firstPattern = allPatterns.list[0]
+            
             if (state == true && playerReady == true){
                 DispatchQueue.main.async {
-                    self.infoLabel.text = "Get Ready"
+                    self.infoLabel.text = "Start!"
+                    self.patternLabel.text = firstPattern.colorSequence
                 }
                 playerReady = false
             }
@@ -177,8 +182,6 @@ class ViewController: UIViewController {
             //catch other errors here
         }
         
-        let firstPattern = allPatterns.list[0]
-        patternLabel.text = firstPattern.colorSequence
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -192,7 +195,7 @@ class ViewController: UIViewController {
             }
         }
         else {
-            let alert = UIAlertController(title: "Awesome", message: "You finished all the patterns, do you want to start over?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Awesome", message: "You finished the game, do you want to start over?", preferredStyle: .alert)
             
             let restartAction = UIAlertAction(title: "Restart", style: .default, handler: {
                 (UIAlertAction) in self.startOver()
@@ -207,7 +210,9 @@ class ViewController: UIViewController {
     func startOver() {
         patternNumber = 0
         playerScore = 0
+        playerReady = true
         nextPattern()
+        
     }
     
     //checks answers
@@ -260,6 +265,7 @@ class ViewController: UIViewController {
         }
         
         if (playerAnswer1 == correct1 && playerAnswer2 == correct2 && playerAnswer3 == correct3 && playerAnswer4 == correct4) {
+            print("All Correct")
             playerScore += 1
         }
         else {
