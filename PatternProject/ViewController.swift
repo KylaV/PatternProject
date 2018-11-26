@@ -254,6 +254,7 @@ class ViewController: UIViewController {
     }
     
     func check4() {
+      
         let correct1 = allPatterns.list[patternNumber].answer1
         let correct2 = allPatterns.list[patternNumber].answer2
         let correct3 = allPatterns.list[patternNumber].answer3
