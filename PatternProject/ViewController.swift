@@ -205,12 +205,14 @@ class ViewController: UIViewController {
             
             present(alert, animated: true, completion: nil)
         }
+        
     }
     
     func startOver() {
         patternNumber = 0
         playerScore = 0
         playerReady = true
+        infoLabel.text = "Press A Button When Ready!"
         nextPattern()
         
     }
