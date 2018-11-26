@@ -217,6 +217,7 @@ class ViewController: UIViewController {
         
     }
     
+
     //checks answers
     func check1() {
      
